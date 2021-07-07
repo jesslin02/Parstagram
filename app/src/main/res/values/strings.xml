@@ -2,6 +2,12 @@
     <string name="app_name">Parstagram</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="login">Log In</string>
+    <string name="login_button">Log In</string>
     <string name="forgot_password">Forgot Password?</string>
+    <string name="dont_have">Don\'t have an account?</string>
+    <string name="sign_up">Sign up.</string>
+    <string name="alr_have">Already have an account?</string>
+    <string name="login_period">Log in.</string>
+    <string name="sign_up_button">Sign Up</string>
+    <string name="sign_up_directions">Please input a username and password to create a new account.</string>
 </resources>

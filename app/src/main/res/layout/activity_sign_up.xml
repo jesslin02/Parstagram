@@ -4,29 +4,43 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".LoginActivity">
+    tools:context=".SignUpActivity">
 
     <ImageView
         android:id="@+id/ivLogo"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80dp"
         android:layout_marginTop="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/nav_logo_whiteout" />
 
+    <TextView
+        android:id="@+id/tvDirections"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:paddingHorizontal="16dp"
+        android:text="@string/sign_up_directions"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+
     <EditText
         android:id="@+id/etUsername"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
         android:ems="10"
         android:hint="@string/username"
         android:inputType="textPersonName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ivLogo" />
+        app:layout_constraintTop_toBottomOf="@+id/tvDirections" />
 
     <EditText
         android:id="@+id/etPassword"
@@ -40,34 +54,19 @@
         app:layout_constraintTop_toBottomOf="@+id/etUsername" />
 
     <Button
-        android:minHeight="0dp"
-        android:id="@+id/btnForgot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:backgroundTint="@color/white"
-        android:text="@string/forgot_password"
-        android:textAllCaps="false"
-        android:textSize="12sp"
-        android:paddingVertical="0dp"
-        android:textColor="@color/royal_blue"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
-
-    <Button
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnSignUp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="8dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/login_button"
+        android:layout_marginTop="28dp"
+        android:backgroundTint="@color/indigo"
+        android:text="@string/sign_up_button"
         android:textAllCaps="false"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnForgot" />
+        app:layout_constraintTop_toBottomOf="@+id/etPassword" />
 
     <LinearLayout
         android:layout_width="wrap_content"
@@ -76,30 +75,30 @@
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btnLogin">
+        app:layout_constraintTop_toBottomOf="@+id/btnSignUp">
 
         <TextView
-            android:id="@+id/tvDontHave"
+            android:id="@+id/tvAlrHave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@string/dont_have"
+            android:text="@string/alr_have"
             android:textColor="@color/black"
             android:textSize="14sp" />
 
         <Button
-            android:id="@+id/btnSignUp"
+            android:id="@+id/btnLogin"
             style="@style/Widget.AppCompat.Button.Borderless"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:backgroundTint="@color/white"
-            android:minHeight="0dp"
             android:minWidth="0dp"
+            android:minHeight="0dp"
             android:paddingHorizontal="4dp"
-            android:text="@string/sign_up"
+            android:text="@string/login_period"
             android:textAllCaps="false"
-            android:textColor="@color/royal_blue" />
+            android:textColor="@color/indigo" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
