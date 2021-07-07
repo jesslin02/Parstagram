@@ -10,4 +10,7 @@
     <string name="login_period">Log in.</string>
     <string name="sign_up_button">Sign Up</string>
     <string name="sign_up_directions">Please input a username and password to create a new account.</string>
+    <string name="take_photo">Take Photo</string>
+    <string name="post">Post</string>
+    <string name="caption">Caption</string>
 </resources>
