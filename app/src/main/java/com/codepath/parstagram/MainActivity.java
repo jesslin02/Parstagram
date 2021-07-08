@@ -71,6 +71,14 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
+
+        binding.btnFeed.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, FeedActivity.class);
+                startActivity(i);
+            }
+        });
     }
 
 
