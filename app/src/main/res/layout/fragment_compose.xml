@@ -7,26 +7,10 @@
     tools:context=".fragments.ComposeFragment">
 
     <Button
-        android:id="@+id/btnFeed"
-        style="@style/Widget.AppCompat.Button.Borderless"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="16dp"
-        android:backgroundTint="@color/white"
-        android:minWidth="0dp"
-        android:text="@string/return_to_feed"
-        android:textAllCaps="false"
-        android:textColor="@color/black"
-        android:textSize="18sp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
         android:id="@+id/btnTakePhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="60dp"
         android:layout_marginHorizontal="16dp"
         android:backgroundTint="@color/dark_orange"
         android:text="@string/take_photo"
