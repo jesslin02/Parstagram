@@ -67,7 +67,7 @@ public class Post extends ParseObject {
                 return "1 minute ago";
             } else if (diff < 50 * MINUTE_MILLIS) {
                 return diff / MINUTE_MILLIS + " minutes ago";
-            } else if (diff < 90 * MINUTE_MILLIS) {
+            } else if (diff < 120 * MINUTE_MILLIS) {
                 return "1 hour ago";
             } else if (diff < 24 * HOUR_MILLIS) {
                 return diff / HOUR_MILLIS + " hours ago";

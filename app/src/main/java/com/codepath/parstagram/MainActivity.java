@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import android.widget.Toast;
 import com.codepath.parstagram.databinding.ActivityMainBinding;
 import com.codepath.parstagram.fragments.ComposeFragment;
 import com.codepath.parstagram.fragments.FeedFragment;
+import com.codepath.parstagram.fragments.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.parse.FindCallback;
 import com.parse.ParseException;
@@ -40,7 +42,8 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
-    public ActivityMainBinding binding;
+    ActivityMainBinding binding;
+    MenuItem miActionProgressItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
                         fragment = new ComposeFragment();
                         break;
                     case R.id.action_profile:
-                        fragment = new ComposeFragment();
+                        fragment = new ProfileFragment();
                         break;
                     default:
                         fragment = new FeedFragment();
@@ -78,5 +81,21 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(@NonNull Menu menu) {
+        miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        return super.onPrepareOptionsMenu(menu);
+    }
+
+    public void showProgressBar() {
+        // Show progress item
+        miActionProgressItem.setVisible(true);
+    }
+
+    public void hideProgressBar() {
+        // Hide progress item
+        miActionProgressItem.setVisible(false);
     }
 }
