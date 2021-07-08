@@ -2,6 +2,7 @@ package com.codepath.parstagram;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -34,6 +35,18 @@ public class FeedActivity extends AppCompatActivity {
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(this, allPosts);
 
+        binding.swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                queryPosts();
+                binding.swipeContainer.setRefreshing(false);
+            }
+        });
+        binding.swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                android.R.color.holo_green_light,
+                android.R.color.holo_orange_light,
+                android.R.color.holo_red_light);
+
         binding.rvPosts.setAdapter(adapter);
         binding.rvPosts.setLayoutManager(new LinearLayoutManager(this));
         queryPosts();
@@ -65,7 +78,9 @@ public class FeedActivity extends AppCompatActivity {
 
                 // save received posts to list and notify adapter of new data
                 allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
+                adapter.clear();
+                adapter.addAll(posts);
+                binding.rvPosts.smoothScrollToPosition(0);
             }
         });
     }
