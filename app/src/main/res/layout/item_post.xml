@@ -26,6 +26,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="18sp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginBottom="4dp"
         tools:text="trying to look hipster" />
+
+    <TextView
+        android:id="@+id/tvDate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="14sp"
+        android:layout_marginBottom="8dp"
+        tools:text="6 days ago" />
+
 </LinearLayout>

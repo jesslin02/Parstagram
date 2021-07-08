@@ -19,7 +19,8 @@
         android:roundIcon="@drawable/icon"
         android:supportsRtl="true"
         android:theme="@style/Theme.Parstagram">
-        <activity android:name=".FeedActivity"></activity>
+        <activity android:name=".PostDetailActivity"></activity>
+        <activity android:name=".FeedActivity" />
         <activity android:name=".SignUpActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
