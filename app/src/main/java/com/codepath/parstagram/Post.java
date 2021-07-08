@@ -15,9 +15,9 @@ import java.util.Date;
 @Parcel(analyze = {Post.class})
 @ParseClassName("Post")
 public class Post extends ParseObject {
-    static final String KEY_DESCRIPTION = "description";
-    static final String KEY_IMAGE = "image";
-    static final String KEY_USER = "user";
+    public static final String KEY_DESCRIPTION = "description";
+    public static final String KEY_IMAGE = "image";
+    public static final String KEY_USER = "user";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
