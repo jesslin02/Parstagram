@@ -1,8 +1,18 @@
 package com.codepath.parstagram.fragments;
 
+import android.content.Intent;
+import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+
+import com.codepath.parstagram.LoginActivity;
 import com.codepath.parstagram.Post;
+import com.codepath.parstagram.R;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
@@ -11,6 +21,14 @@ import com.parse.ParseUser;
 import java.util.List;
 
 public class ProfileFragment extends FeedFragment {
+    MenuItem logout;
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setHasOptionsMenu(true);
+    }
+
     @Override
     protected void queryPosts() {
         // specify what type of data we want to query - Post.class
@@ -45,5 +63,29 @@ public class ProfileFragment extends FeedFragment {
                 rvPosts.smoothScrollToPosition(0);
             }
         });
+    }
+
+    @Override
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        logout = menu.findItem(R.id.logout);
+        logout.setVisible(true);
+        super.onPrepareOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logout) {
+            onLogoutButton();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onLogoutButton() {
+        ParseUser.logOut();
+        Intent i = new Intent(mainActivity, LoginActivity.class);
+        startActivity(i);
+        // so that pressing the back button on the MainActivity doesn't go back to the login screen
+        mainActivity.finish();
     }
 }

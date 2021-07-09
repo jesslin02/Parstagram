@@ -86,7 +86,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                         PostDetailFragment pdFragment = PostDetailFragment.newInstance(post, position);
                         AppCompatActivity main = (AppCompatActivity) context;
                         main.getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.flContainer, pdFragment).commit();
+                                .replace(R.id.flContainer, pdFragment)
+                                .addToBackStack(null).commit();
                     }
                 });
             }

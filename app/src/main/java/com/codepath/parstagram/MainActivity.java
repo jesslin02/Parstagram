@@ -94,6 +94,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onPrepareOptionsMenu(@NonNull Menu menu) {
         miActionProgressItem = menu.findItem(R.id.miActionProgress);
         logout = menu.findItem(R.id.logout);
+        logout.setVisible(false);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -111,16 +112,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.logout) {
-            onLogoutButton();
+            return false;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void onLogoutButton() {
-        ParseUser.logOut();
-        Intent i = new Intent(this, LoginActivity.class);
-        startActivity(i);
-        // so that pressing the back button on the MainActivity doesn't go back to the login screen
-        finish();
     }
 }

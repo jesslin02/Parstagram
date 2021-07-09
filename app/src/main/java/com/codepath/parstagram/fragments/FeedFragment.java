@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codepath.parstagram.EndlessRecyclerViewScrollListener;
 import com.codepath.parstagram.MainActivity;
 import com.codepath.parstagram.Post;
 import com.codepath.parstagram.PostsAdapter;
@@ -35,9 +36,12 @@ public class FeedFragment extends Fragment {
     public static final String ARG_POSITION = "position";
     int position;
     RecyclerView rvPosts;
+    LinearLayoutManager llManager;
     PostsAdapter adapter;
     List<Post> allPosts;
     SwipeRefreshLayout swipeContainer;
+    EndlessRecyclerViewScrollListener scrollListener;
+    MainActivity mainActivity;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -76,6 +80,7 @@ public class FeedFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        mainActivity = (MainActivity) getActivity();
         rvPosts = view.findViewById(R.id.rvPosts);
         swipeContainer = view.findViewById(R.id.swipeContainer);
 
@@ -95,15 +100,27 @@ public class FeedFragment extends Fragment {
                 android.R.color.holo_red_light);
 
         rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        llManager = new LinearLayoutManager(getContext());
+        rvPosts.setLayoutManager(llManager);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(llManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                queryOlderPosts();
+            }
+        };
+
+        rvPosts.addOnScrollListener(scrollListener);
         queryPosts();
     }
 
-    protected void queryPosts() {
+    private void queryOlderPosts() {
+        mainActivity.showProgressBar();
         // specify what type of data we want to query - Post.class
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // include data referred by user key
         query.include(Post.KEY_USER);
+        query.setSkip(allPosts.size());
         // limit query to latest 20 items
         query.setLimit(20);
         // order posts by creation date (newest first)
@@ -124,11 +141,48 @@ public class FeedFragment extends Fragment {
                 }
 
                 // save received posts to list and notify adapter of new data
-                allPosts.addAll(posts);
+                adapter.addAll(posts);
+                if (position > llManager.findFirstVisibleItemPosition() && position < allPosts.size()) {
+                    rvPosts.scrollToPosition(position);
+                }
+                mainActivity.hideProgressBar();
+            }
+        });
+    }
+
+    protected void queryPosts() {
+        // specify what type of data we want to query - Post.class
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        // include data referred by user key
+        query.include(Post.KEY_USER);
+        // limit query to latest 20 items
+        query.setLimit(10);
+        // order posts by creation date (newest first)
+        query.addDescendingOrder(Post.KEY_CREATED_AT);
+        // start an asynchronous call for posts
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                // check for errors
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+
+                // for debugging purposes let's print every post description to logcat
+                for (Post post : posts) {
+                    Log.i(TAG, "Post: " + post.getDescription() + ", username: " + post.getUser().getUsername());
+                }
+
+                // save received posts to list and notify adapter of new data
                 adapter.clear();
                 adapter.addAll(posts);
+                int num_queries = position / 10;
+                for (int i = 0; i < num_queries; i++) {
+                    mainActivity.showProgressBar();
+                    queryOlderPosts();
+                }
                 rvPosts.scrollToPosition(position);
-                MainActivity mainActivity = (MainActivity) getActivity();
                 mainActivity.hideProgressBar();
             }
         });
