@@ -2,15 +2,20 @@ package com.codepath.parstagram;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.codepath.parstagram.databinding.ActivityMainBinding;
 import com.codepath.parstagram.databinding.ActivityPostDetailBinding;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
+
+import java.util.ArrayList;
 
 public class PostDetailActivity extends AppCompatActivity {
     ActivityPostDetailBinding binding;
@@ -38,6 +43,27 @@ public class PostDetailActivity extends AppCompatActivity {
         ParseFile image = post.getImage();
         if (image != null) {
             Glide.with(this).load(image.getUrl()).into(binding.ivImage);
+        }
+        updateHeart();
+        binding.ivLike.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                post.addLike(ParseUser.getCurrentUser().getObjectId());
+                updateHeart();
+            }
+        });
+    }
+
+    private void updateHeart() {
+        ArrayList<String> likes = post.getLikes();
+        if (likes != null && likes.contains(ParseUser.getCurrentUser().getObjectId())) {
+            String uri = "@drawable/ufi_heart_active";  // where myresource (without the extension) is the file
+
+            int imageResource = getResources().getIdentifier(uri, null, getPackageName());
+
+            Drawable res = getResources().getDrawable(imageResource);
+            binding.ivLike.setImageBitmap(null);
+            binding.ivLike.setImageDrawable(res);
         }
     }
 }

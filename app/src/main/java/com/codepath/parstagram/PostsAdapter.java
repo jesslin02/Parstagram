@@ -2,6 +2,7 @@ package com.codepath.parstagram;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,9 +17,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.codepath.parstagram.fragments.PostDetailFragment;
 import com.parse.ParseFile;
+import com.parse.ParseUser;
 
 import org.parceler.Parcels;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> {
@@ -64,6 +67,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private ImageView ivImage;
         private TextView tvDescription;
         private TextView tvDate;
+        private ImageView ivLike;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -72,6 +76,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvDate = itemView.findViewById(R.id.tvDate);
+            ivLike = itemView.findViewById(R.id.ivLike);
         }
 
         public void bind(Post post, int position) {
@@ -92,7 +97,39 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     }
                 });
             }
+            updateHeart(post);
+            ivLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    post.addLike(ParseUser.getCurrentUser().getObjectId());
+                    updateHeart(post);
+                }
+            });
+        }
+
+        private void updateHeart(Post post) {
+            String uri = "@drawable/ufi_heart_icon";  // where myresource (without the extension) is the file
+
+            int imageResource = context.getResources().getIdentifier(uri, null, context.getPackageName());
+
+            Drawable res = context.getResources().getDrawable(imageResource);
+            ivLike.setImageBitmap(null);
+            ivLike.setImageDrawable(res);
+
+
+            ArrayList<String> likes = post.getLikes();
+            if (likes != null && likes.contains(ParseUser.getCurrentUser().getObjectId())) {
+                String uri_active = "@drawable/ufi_heart_active";  // where myresource (without the extension) is the file
+
+                int imageResource_active = context.getResources().getIdentifier(uri_active, null, context.getPackageName());
+
+                Drawable res_active = context.getResources().getDrawable(imageResource_active);
+                ivLike.setImageBitmap(null);
+                ivLike.setImageDrawable(res_active);
+            }
         }
 
     }
+
+
 }

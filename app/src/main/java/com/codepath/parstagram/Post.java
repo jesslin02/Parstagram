@@ -7,10 +7,14 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.parceler.Parcel;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Parcel(analyze = {Post.class})
 @ParseClassName("Post")
@@ -18,6 +22,7 @@ public class Post extends ParseObject {
     public static final String KEY_DESCRIPTION = "description";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_USER = "user";
+    public static final String KEY_LIKES = "Likes";
 
     public String getDescription() {
         return getString(KEY_DESCRIPTION);
@@ -41,6 +46,39 @@ public class Post extends ParseObject {
 
     public void setUser(ParseUser user) {
         put(KEY_USER, user);
+    }
+
+    public ArrayList<String> getLikes() {
+        JSONArray jsonLikes = getJSONArray(KEY_LIKES);
+        if (jsonLikes == null) {
+            return null;
+        }
+        ArrayList<String> likes = new ArrayList<>();
+        for (int i = 0; i < jsonLikes.length(); i++) {
+            try {
+                likes.add(jsonLikes.getString(i));
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return likes;
+    }
+
+    public int getNumLikes() {
+        List<String> likes = getLikes();
+        if (likes != null) {
+            return likes.size();
+        } else {
+            return 0;
+        }
+    }
+
+    public void addLike(String userId) {
+        ArrayList<String> likes = getLikes();
+        if (likes == null || !likes.contains(userId)) {
+            add(KEY_LIKES, userId);
+            saveInBackground();
+        }
     }
 
     public String getTimeAgo() {
