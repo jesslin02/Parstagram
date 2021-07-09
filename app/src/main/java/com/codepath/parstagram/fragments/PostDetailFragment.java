@@ -64,19 +64,19 @@ public class PostDetailFragment extends Fragment {
             this.position = getArguments().getInt(ARG_POSITION);
         }
 
-        // This callback will only be called when MyFragment is at least Started.
-        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
-            @Override
-            public void handleOnBackPressed() {
-                // Handle the back button event
-                MainActivity mainActivity = (MainActivity) getActivity();
-                FeedFragment fFragment = FeedFragment.newInstance(position);
-                mainActivity.showProgressBar();
-                mainActivity.getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.flContainer, fFragment).commit();
-            }
-        };
-        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
+//        // This callback will only be called when MyFragment is at least Started.
+//        OnBackPressedCallback callback = new OnBackPressedCallback(true /* enabled by default */) {
+//            @Override
+//            public void handleOnBackPressed() {
+//                // Handle the back button event
+//                MainActivity mainActivity = (MainActivity) getActivity();
+//                FeedFragment fFragment = FeedFragment.newInstance(position);
+//                mainActivity.showProgressBar();
+//                mainActivity.getSupportFragmentManager().beginTransaction()
+//                        .replace(R.id.flContainer, fFragment).commit();
+//            }
+//        };
+//        requireActivity().getOnBackPressedDispatcher().addCallback(this, callback);
     }
 
     @Override

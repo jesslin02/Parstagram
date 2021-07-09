@@ -33,8 +33,6 @@ import java.util.List;
  */
 public class FeedFragment extends Fragment {
     public static final String TAG = "FeedFragment";
-    public static final String ARG_POSITION = "position";
-    int position;
     RecyclerView rvPosts;
     LinearLayoutManager llManager;
     PostsAdapter adapter;
@@ -45,29 +43,6 @@ public class FeedFragment extends Fragment {
 
     public FeedFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * returns new feedfragment with position where it should go
-     * @param position position in feed before going to the post detail fragment
-     * @return
-     */
-    public static FeedFragment newInstance(int position) {
-        FeedFragment fragment = new FeedFragment();
-        Bundle args = new Bundle();
-        args.putInt(ARG_POSITION, position);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            this.position = getArguments().getInt(ARG_POSITION);
-        } else {
-            this.position = 0;
-        }
     }
 
     @Override
@@ -92,6 +67,7 @@ public class FeedFragment extends Fragment {
             public void onRefresh() {
                 queryPosts();
                 swipeContainer.setRefreshing(false);
+                scrollListener.resetState();
             }
         });
         swipeContainer.setColorSchemeResources(android.R.color.holo_blue_bright,
@@ -114,7 +90,7 @@ public class FeedFragment extends Fragment {
         queryPosts();
     }
 
-    private void queryOlderPosts() {
+    public void queryOlderPosts() {
         mainActivity.showProgressBar();
         // specify what type of data we want to query - Post.class
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
@@ -142,9 +118,6 @@ public class FeedFragment extends Fragment {
 
                 // save received posts to list and notify adapter of new data
                 adapter.addAll(posts);
-                if (position > llManager.findFirstVisibleItemPosition() && position < allPosts.size()) {
-                    rvPosts.scrollToPosition(position);
-                }
                 mainActivity.hideProgressBar();
             }
         });
@@ -177,12 +150,7 @@ public class FeedFragment extends Fragment {
                 // save received posts to list and notify adapter of new data
                 adapter.clear();
                 adapter.addAll(posts);
-                int num_queries = position / 10;
-                for (int i = 0; i < num_queries; i++) {
-                    mainActivity.showProgressBar();
-                    queryOlderPosts();
-                }
-                rvPosts.scrollToPosition(position);
+                rvPosts.scrollToPosition(0);
                 mainActivity.hideProgressBar();
             }
         });

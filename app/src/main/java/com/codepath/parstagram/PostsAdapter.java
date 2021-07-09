@@ -60,6 +60,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvUsername;
+        private TextView tvUsernameUnder;
         private ImageView ivImage;
         private TextView tvDescription;
         private TextView tvDate;
@@ -67,6 +68,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             tvUsername = itemView.findViewById(R.id.tvUsername);
+            tvUsernameUnder = itemView.findViewById(R.id.tvUsernameUnder);
             ivImage = itemView.findViewById(R.id.ivImage);
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvDate = itemView.findViewById(R.id.tvDate);
@@ -76,6 +78,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             // Bind the post data to the view elements
             tvDescription.setText(post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
+            tvUsernameUnder.setText(post.getUser().getUsername());
             tvDate.setText(post.getTimeAgo());
             ParseFile image = post.getImage();
             if (image != null) {
@@ -83,11 +86,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 ivImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        PostDetailFragment pdFragment = PostDetailFragment.newInstance(post, position);
-                        AppCompatActivity main = (AppCompatActivity) context;
-                        main.getSupportFragmentManager().beginTransaction()
-                                .replace(R.id.flContainer, pdFragment)
-                                .addToBackStack(null).commit();
+                        Intent i = new Intent(context, PostDetailActivity.class);
+                        i.putExtra("post", Parcels.wrap(post));
+                        context.startActivity(i);
                     }
                 });
             }

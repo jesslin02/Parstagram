@@ -32,6 +32,7 @@ public class PostDetailActivity extends AppCompatActivity {
 
     private void showPostDetails() {
         binding.tvUsername.setText(post.getUser().getUsername());
+        binding.tvUsernameUnder.setText(post.getUser().getUsername());
         binding.tvDescription.setText(post.getDescription());
         binding.tvDate.setText(post.getTimeAgo());
         ParseFile image = post.getImage();
