@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginVertical="8dp"
+    android:layout_marginTop="16dp"
     tools:context=".PostDetailActivity">
 
     <TextView
@@ -53,7 +53,7 @@
         android:id="@+id/ivComment"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@id/ivLike"
         app:layout_constraintTop_toTopOf="@id/ivLike"
         app:srcCompat="@drawable/ufi_comment"/>
@@ -62,7 +62,7 @@
         android:id="@+id/ivDM"
         android:layout_width="30dp"
         android:layout_height="30dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintStart_toEndOf="@id/ivComment"
         app:layout_constraintTop_toTopOf="@id/ivLike"
         app:srcCompat="@drawable/direct"/>
