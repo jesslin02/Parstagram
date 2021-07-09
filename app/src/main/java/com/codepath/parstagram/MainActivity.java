@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     public static final String TAG = "MainActivity";
     ActivityMainBinding binding;
     MenuItem miActionProgressItem;
+    MenuItem logout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +85,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
     public boolean onPrepareOptionsMenu(@NonNull Menu menu) {
         miActionProgressItem = menu.findItem(R.id.miActionProgress);
+        logout = menu.findItem(R.id.logout);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -97,5 +105,22 @@ public class MainActivity extends AppCompatActivity {
     public void hideProgressBar() {
         // Hide progress item
         miActionProgressItem.setVisible(false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.logout) {
+            onLogoutButton();
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+    private void onLogoutButton() {
+        ParseUser.logOut();
+        Intent i = new Intent(this, LoginActivity.class);
+        startActivity(i);
+        // so that pressing the back button on the MainActivity doesn't go back to the login screen
+        finish();
     }
 }

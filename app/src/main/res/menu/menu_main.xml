@@ -15,5 +15,5 @@
         android:icon="@drawable/ic_logout_icon"
         android:title="@string/logout"
         android:tint="@color/white"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
 </menu>
