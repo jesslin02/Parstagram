@@ -191,7 +191,8 @@ public class ComposeFragment extends Fragment {
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
         post.setUser(currentUser);
-        // MainActivity.showProgressBar();
+        MainActivity mainAct = (MainActivity) getActivity();
+        mainAct.showProgressBar();
         post.saveInBackground(new SaveCallback() {
             @Override
             public void done(ParseException e) {
@@ -202,7 +203,7 @@ public class ComposeFragment extends Fragment {
                 }
                 Log.i(TAG, "Post save was successful!");
                 etCaption.setText("");
-                // MainActivity.hideProgressBar();
+                mainAct.hideProgressBar();
                 ivPostImage.setImageResource(0);
             }
         });

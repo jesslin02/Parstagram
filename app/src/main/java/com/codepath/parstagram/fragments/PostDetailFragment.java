@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.parstagram.MainActivity;
 import com.codepath.parstagram.Post;
 import com.codepath.parstagram.R;
 import com.parse.ParseFile;
@@ -68,8 +69,10 @@ public class PostDetailFragment extends Fragment {
             @Override
             public void handleOnBackPressed() {
                 // Handle the back button event
+                MainActivity mainActivity = (MainActivity) getActivity();
                 FeedFragment fFragment = FeedFragment.newInstance(position);
-                getActivity().getSupportFragmentManager().beginTransaction()
+                mainActivity.showProgressBar();
+                mainActivity.getSupportFragmentManager().beginTransaction()
                         .replace(R.id.flContainer, fFragment).commit();
             }
         };

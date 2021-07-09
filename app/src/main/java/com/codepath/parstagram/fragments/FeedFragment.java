@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.codepath.parstagram.MainActivity;
 import com.codepath.parstagram.Post;
 import com.codepath.parstagram.PostsAdapter;
 import com.codepath.parstagram.R;
@@ -127,6 +128,8 @@ public class FeedFragment extends Fragment {
                 adapter.clear();
                 adapter.addAll(posts);
                 rvPosts.scrollToPosition(position);
+                MainActivity mainActivity = (MainActivity) getActivity();
+                mainActivity.hideProgressBar();
             }
         });
     }
