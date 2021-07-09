@@ -10,9 +10,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.codepath.parstagram.fragments.PostDetailFragment;
 import com.parse.ParseFile;
 
 import org.parceler.Parcels;
@@ -38,7 +40,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.bind(post);
+        holder.bind(post, position);
     }
 
     @Override
@@ -70,7 +72,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDate = itemView.findViewById(R.id.tvDate);
         }
 
-        public void bind(Post post) {
+        public void bind(Post post, int position) {
             // Bind the post data to the view elements
             tvDescription.setText(post.getDescription());
             tvUsername.setText(post.getUser().getUsername());
@@ -81,9 +83,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 ivImage.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Intent i = new Intent(context, PostDetailActivity.class);
-                        i.putExtra("post", Parcels.wrap(post));
-                        context.startActivity(i);
+                        PostDetailFragment pdFragment = PostDetailFragment.newInstance(post, position);
+                        AppCompatActivity main = (AppCompatActivity) context;
+                        main.getSupportFragmentManager().beginTransaction()
+                                .replace(R.id.flContainer, pdFragment).commit();
                     }
                 });
             }

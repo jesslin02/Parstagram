@@ -31,6 +31,8 @@ import java.util.List;
  */
 public class FeedFragment extends Fragment {
     public static final String TAG = "FeedFragment";
+    public static final String ARG_POSITION = "position";
+    int position;
     RecyclerView rvPosts;
     PostsAdapter adapter;
     List<Post> allPosts;
@@ -38,6 +40,29 @@ public class FeedFragment extends Fragment {
 
     public FeedFragment() {
         // Required empty public constructor
+    }
+
+    /**
+     * returns new feedfragment with position where it should go
+     * @param position position in feed before going to the post detail fragment
+     * @return
+     */
+    public static FeedFragment newInstance(int position) {
+        FeedFragment fragment = new FeedFragment();
+        Bundle args = new Bundle();
+        args.putInt(ARG_POSITION, position);
+        fragment.setArguments(args);
+        return fragment;
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            this.position = getArguments().getInt(ARG_POSITION);
+        } else {
+            this.position = 0;
+        }
     }
 
     @Override
@@ -101,7 +126,7 @@ public class FeedFragment extends Fragment {
                 allPosts.addAll(posts);
                 adapter.clear();
                 adapter.addAll(posts);
-                rvPosts.smoothScrollToPosition(0);
+                rvPosts.scrollToPosition(position);
             }
         });
     }
