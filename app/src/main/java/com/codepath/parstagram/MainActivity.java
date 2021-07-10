@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
                     default:
                         fragment = new FeedFragment();
                 }
+                showProgressBar();
                 fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 return true;
             }
@@ -76,12 +77,17 @@ public class MainActivity extends AppCompatActivity {
 
     public void showProgressBar() {
         // Show progress item
-        miActionProgressItem.setVisible(true);
+        if (miActionProgressItem != null) {
+            miActionProgressItem.setVisible(true);
+        }
     }
 
     public void hideProgressBar() {
         // Hide progress item
-        miActionProgressItem.setVisible(false);
+        if (miActionProgressItem != null) {
+            miActionProgressItem.setVisible(false);
+        }
+
     }
 
     @Override

@@ -68,6 +68,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvDescription;
         private TextView tvDate;
         private ImageView ivLike;
+        private TextView tvNumLikes;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -77,6 +78,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvDescription = itemView.findViewById(R.id.tvDescription);
             tvDate = itemView.findViewById(R.id.tvDate);
             ivLike = itemView.findViewById(R.id.ivLike);
+            tvNumLikes = itemView.findViewById(R.id.tvNumLikes);
         }
 
         public void bind(Post post, int position) {
@@ -85,6 +87,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvUsername.setText(post.getUser().getUsername());
             tvUsernameUnder.setText(post.getUser().getUsername());
             tvDate.setText(post.getTimeAgo());
+            tvNumLikes.setText(String.valueOf(post.getNumLikes()) + " likes");
             ParseFile image = post.getImage();
             if (image != null) {
                 Glide.with(context).load(image.getUrl()).into(ivImage);
@@ -103,6 +106,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                 public void onClick(View v) {
                     post.addLike(ParseUser.getCurrentUser().getObjectId());
                     updateHeart(post);
+                    tvNumLikes.setText(String.valueOf(post.getNumLikes()) + " likes");
                 }
             });
         }
@@ -118,7 +122,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
 
             ArrayList<String> likes = post.getLikes();
-            if (likes != null && likes.contains(ParseUser.getCurrentUser().getObjectId())) {
+            String currentId = ParseUser.getCurrentUser().getObjectId();
+            if (likes != null && likes.contains(currentId)) {
                 String uri_active = "@drawable/ufi_heart_active";  // where myresource (without the extension) is the file
 
                 int imageResource_active = context.getResources().getIdentifier(uri_active, null, context.getPackageName());

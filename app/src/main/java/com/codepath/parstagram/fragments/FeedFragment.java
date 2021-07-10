@@ -88,6 +88,7 @@ public class FeedFragment extends Fragment {
 
         rvPosts.addOnScrollListener(scrollListener);
         queryPosts();
+        mainActivity.hideProgressBar();
     }
 
     public void queryOlderPosts() {

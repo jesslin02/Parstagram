@@ -50,8 +50,10 @@ public class PostDetailActivity extends AppCompatActivity {
             public void onClick(View v) {
                 post.addLike(ParseUser.getCurrentUser().getObjectId());
                 updateHeart();
+                binding.tvNumLikes.setText(String.valueOf(post.getNumLikes()) + " likes");
             }
         });
+        binding.tvNumLikes.setText(String.valueOf(post.getNumLikes()) + " likes");
     }
 
     private void updateHeart() {

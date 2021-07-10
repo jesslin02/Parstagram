@@ -61,6 +61,7 @@ public class Post extends ParseObject {
                 e.printStackTrace();
             }
         }
+
         return likes;
     }
 
@@ -77,6 +78,7 @@ public class Post extends ParseObject {
         ArrayList<String> likes = getLikes();
         if (likes == null || !likes.contains(userId)) {
             add(KEY_LIKES, userId);
+            Log.i("Post", userId + " liked " + getUser().getUsername() + "'s post");
             saveInBackground();
         }
     }

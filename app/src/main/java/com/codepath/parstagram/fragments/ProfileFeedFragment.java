@@ -119,6 +119,8 @@ public class ProfileFeedFragment extends FeedFragment {
 
     private void onLogoutButton() {
         ParseUser.logOut();
+        Log.i("ProfileFeedFragment", "logging out, current user is now: "
+                + ParseUser.getCurrentUser());
         Intent i = new Intent(mainActivity, LoginActivity.class);
         startActivity(i);
         // so that pressing the back button on the MainActivity doesn't go back to the login screen
