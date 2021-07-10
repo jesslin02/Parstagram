@@ -1,3 +1,4 @@
+
 # Project 4 - *Parstagram*
 
 **Parstagram** is a photo sharing app using Parse as its backend.
@@ -44,16 +45,14 @@ The following **additional** features are implemented:
 
 Please list two areas of the assignment you'd like to **discuss further with your peers** during the next class (examples include better ways to implement something, how to extend your app in certain ways, etc):
 
-1.
-2.
+1. ways to sync likes across timeline and detail view
+2. efficient code that does not repeat
 
 ## Video Walkthrough
 
 Here's a walkthrough of implemented user stories:
 
-<img src='http://i.imgur.com/link/to/your/gif/file.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
-
-GIF created with [Kap](https://getkap.co/).
+https://user-images.githubusercontent.com/53272628/125147652-88a96b80-e0e1-11eb-9bff-bd9d2cb42256.mp4
 
 ## Credits
 
@@ -63,10 +62,12 @@ List an 3rd party libraries, icons, graphics, or other assets you used in your a
 
 
 ## Notes
-
+challenges:
 * figuring out fragments in general
   * how to launch fragments from adapters (PostsAdapter for Feed RecyclerView --> Post Details)
   * how to launch fragments from fragments using the back button (Post Details --> Feed)
+* querying data from parse
+* deciding when to show/hide the progress bar
 
 ## License
 
