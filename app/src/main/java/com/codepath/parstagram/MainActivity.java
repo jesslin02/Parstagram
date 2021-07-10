@@ -1,6 +1,7 @@
 package com.codepath.parstagram;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -39,26 +40,42 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 Fragment fragment;
+                String fragmentTag;
                 switch (item.getItemId()) {
                     case R.id.action_home:
                         fragment = new FeedFragment();
+                        fragmentTag = "feed";
                         break;
                     case R.id.action_compose:
                         fragment = new ComposeFragment();
+                        fragmentTag = "compose";
                         break;
                     case R.id.action_profile:
                         fragment = new ProfileFeedFragment();
+                        fragmentTag = "profile";
                         break;
                     default:
                         fragment = new FeedFragment();
+                        fragmentTag = "feed";
                 }
                 showProgressBar();
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
+                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment, fragmentTag).commit();
                 return true;
             }
         });
 
         binding.bottomNavigation.setSelectedItemId(R.id.action_home);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Fragment curr = getSupportFragmentManager().findFragmentByTag("feed");
+        if (curr != null && curr.isVisible()) {
+            Log.i(TAG, "onResume in feed");
+            FeedFragment ff = (FeedFragment) curr;
+            ff.queryPosts();
+        }
     }
 
     @Override

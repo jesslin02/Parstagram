@@ -124,7 +124,7 @@ public class FeedFragment extends Fragment {
         });
     }
 
-    protected void queryPosts() {
+    public void queryPosts() {
         // specify what type of data we want to query - Post.class
         ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
         // include data referred by user key
