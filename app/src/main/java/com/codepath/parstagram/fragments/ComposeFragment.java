@@ -55,6 +55,7 @@ public class ComposeFragment extends Fragment {
     public static final int RESIZE_WIDTH = 1000;
     public String photoFileName = "photo.jpg";
     File photoFile;
+    MainActivity mainAct;
 
     EditText etCaption;
     Button btnTakePhoto;
@@ -82,33 +83,35 @@ public class ComposeFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-            etCaption = view.findViewById(R.id.etCaption);
-            btnTakePhoto = view.findViewById(R.id.btnTakePhoto);
-            ivPostImage = view.findViewById(R.id.ivPostImage);
-            btnPost = view.findViewById(R.id.btnPost);
+        mainAct = (MainActivity) getActivity();
+        mainAct.hideProgressBar();
+        etCaption = view.findViewById(R.id.etCaption);
+        btnTakePhoto = view.findViewById(R.id.btnTakePhoto);
+        ivPostImage = view.findViewById(R.id.ivPostImage);
+        btnPost = view.findViewById(R.id.btnPost);
 
-            btnTakePhoto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    launchCamera();
-                }
-            });
+        btnTakePhoto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchCamera();
+            }
+        });
 
-            btnPost.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    String description = etCaption.getText().toString();
-                    if (description.isEmpty()) {
-                        Toast.makeText(getContext(), "Caption cannot be empty", Toast.LENGTH_SHORT).show();
-                    } else if (photoFile == null || ivPostImage.getDrawable() == null) {
-                        Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
-                    } else {
-                        ParseUser currentUser = ParseUser.getCurrentUser();
-                        savePost(description, currentUser, photoFile);
-                    }
+        btnPost.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String description = etCaption.getText().toString();
+                if (description.isEmpty()) {
+                    Toast.makeText(getContext(), "Caption cannot be empty", Toast.LENGTH_SHORT).show();
+                } else if (photoFile == null || ivPostImage.getDrawable() == null) {
+                    Toast.makeText(getContext(), "There is no image!", Toast.LENGTH_SHORT).show();
+                } else {
+                    ParseUser currentUser = ParseUser.getCurrentUser();
+                    savePost(description, currentUser, photoFile);
                 }
-            });
-        }
+            }
+        });
+    }
 
     private void launchCamera() {
         // create Intent to take a picture and return control to the calling application
@@ -191,7 +194,6 @@ public class ComposeFragment extends Fragment {
         post.setDescription(description);
         post.setImage(new ParseFile(photoFile));
         post.setUser(currentUser);
-        MainActivity mainAct = (MainActivity) getActivity();
         mainAct.showProgressBar();
         post.saveInBackground(new SaveCallback() {
             @Override

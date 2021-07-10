@@ -70,12 +70,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        Fragment curr = getSupportFragmentManager().findFragmentByTag("feed");
-        if (curr != null && curr.isVisible()) {
-            Log.i(TAG, "onResume in feed");
-            FeedFragment ff = (FeedFragment) curr;
-            ff.queryPosts();
-        }
+//        Fragment curr = getSupportFragmentManager().findFragmentByTag("feed");
+//        if (curr != null && curr.isVisible()) {
+//            Log.i(TAG, "onResume in feed");
+//            FeedFragment ff = (FeedFragment) curr;
+//            ff.queryPosts();
+//        }
     }
 
     @Override
